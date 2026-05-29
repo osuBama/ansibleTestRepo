@@ -1,0 +1,18 @@
+---
+- name: Fetch data from DB
+  community.mysql.mysql_query:
+    login_db: "{{ db_name }}"
+    query: "SELECT * FROM shitty_pasta WHERE shit_text IS NOT NULL"
+    login_unix_socket: /var/lib/mysql/mysql.sock
+  register: fetch_query_result
+
+- name: Write the fetched data to a file
+  copy:
+    content: "{{ fetch_query_result.query_result | to_nice_yaml }}"
+    dest: /tmp/shitty_pasta.yaml
+
+- name: Fetch the file back to ACH
+  fetch:
+    src: /tmp/shitty_pasta.yaml
+    dest: ./db_fetched/shit_me.yaml
+    flat: true
