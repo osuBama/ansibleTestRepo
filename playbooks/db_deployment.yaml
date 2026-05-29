@@ -1,0 +1,6 @@
+---
+- name: Deploy a Database
+  hosts: db_servers
+  become: true
+  roles:
+    - db_servers

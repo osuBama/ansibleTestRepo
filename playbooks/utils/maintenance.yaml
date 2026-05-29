@@ -1,0 +1,17 @@
+---
+- name: Basic server update
+  hosts: all
+  remote_user: root
+
+
+  tasks:
+   - name: Ping hosts
+     ansible.builtin.ping:
+      
+      
+
+   - name: Install updates
+     ansible.builtin.package:
+      update_cache: yes
+      state: present
+     become: yes
