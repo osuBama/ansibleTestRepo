@@ -30,3 +30,8 @@ CREATE TABLE IF NOT EXISTS audit_log (
     INDEX idx_user_action (user_id, action),
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS shitty_pasta (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    shit_text TEXT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

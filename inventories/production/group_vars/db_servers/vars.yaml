@@ -2,4 +2,4 @@
 db_name: totallyChatGPT
 db_user: "{{ vault_db_user }}"
 db_token: "{{ vault_db_password }}"
-ansible_user: nando
+ansible_user: "{{ vault_ansible_user }}"
