@@ -1,0 +1,23 @@
+---
+- name: Mock user fetching data from server
+  community.mysql.mysql_query:
+    login_db: totallyChatGPT
+    login_user: "{{ db_user }}"
+    login_password: "{{ db_token }}"
+    login_unix_socket: /var/lib/mysql/mysql.sock
+    query: SELECT * FROM users WHERE email = (%s) AND password_hash = (%s)
+    positional_args: 
+      - "{{ inserted_user1_email }}"
+      - "{{ inserted_user1_token }}"
+  register: db_servers_user_check
+  no_log: true
+
+- name: Throw mock error in case user credentials wrong
+  debug:
+    msg: "Login credentials incorrect - User not found!"
+  when: db_servers_user_check.query_result[0] | length == 0
+
+- name: Throw mock success message if credentials match
+  debug:
+    msg: "Login Successful - Welcome back!"
+  when: db_servers_user_check.query_result[0] | length > 0

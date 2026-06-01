@@ -13,3 +13,6 @@
 
 - import_tasks: /home/nando/ansible-Test/roles/db_servers/tasks/utils/fetchUsers.yaml
   tags: [fetchUsers, never]
+
+- import_tasks: /home/nando/ansible-Test/roles/db_servers/tasks/utils/mockUserDBFetch.yaml
+  tags: [fetchUsers, never]
