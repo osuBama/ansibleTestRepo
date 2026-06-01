@@ -1,3 +1,15 @@
 ---
 - import_tasks: deployDB.yaml
-- import_tasks: fetchUsers.yaml
+  tags: always
+
+- import_tasks: /home/nando/ansible-Test/roles/db_servers/tasks/utils/mock_data.yaml
+  tags: [addText, never]
+
+- import_tasks: /home/nando/ansible-Test/roles/db_servers/tasks/utils/mock_users.yaml
+  tags: [addUsers, never]
+
+- import_tasks: /home/nando/ansible-Test/roles/db_servers/tasks/utils/fetchText.yaml
+  tags: [fetchPasta, never]
+
+- import_tasks: /home/nando/ansible-Test/roles/db_servers/tasks/utils/fetchUsers.yaml
+  tags: [fetchUsers, never]
