@@ -1,0 +1,14 @@
+---
+- name: Fetch data from DB
+  community.mysql.mysql_query:
+    login_db: "{{ db_name }}"
+    query: "SELECT * FROM users WHERE name IS NOT NULL"
+    login_unix_socket: /var/lib/mysql/mysql.sock
+  register: fetch_query_result
+
+- name: Write the fetched data to a file
+  copy:
+    content: "{{ fetch_query_result.query_result | to_nice_yaml }}"
+    dest: ./db_fetched/users.yaml
+  delegate_to: localhost
+  become: false

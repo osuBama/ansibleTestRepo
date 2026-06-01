@@ -9,10 +9,6 @@
 - name: Write the fetched data to a file
   copy:
     content: "{{ fetch_query_result.query_result | to_nice_yaml }}"
-    dest: /tmp/shitty_pasta.yaml
-
-- name: Fetch the file back to ACH
-  fetch:
-    src: /tmp/shitty_pasta.yaml
     dest: ./db_fetched/shit_me.yaml
-    flat: true
+  delegate_to: localhost
+  become: false
