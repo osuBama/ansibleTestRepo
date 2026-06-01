@@ -36,22 +36,16 @@
     login_db: "{{ db_name }}"
     query: "SHOW TABLES LIKE 'shitty_pasta'"
     login_unix_socket: /var/lib/mysql/mysql.sock
-  register: dbservers_tables_check
-
-- name: Copy over the schema file
-  ansible.builtin.copy:
-    src: files/template_schema.sql
-    dest: /tmp/schema.sql
-    mode: '0644'
-  when: dbservers_tables_check.query_result[0] | length == 0
+  register: db_servers_tables_check
 
 - name: Apply the schema
   community.mysql.mysql_db:
     name: "{{ db_name }}"
     state: import
-    target: /tmp/schema.sql
+    target: files/template_schema.sql
     login_unix_socket: /var/lib/mysql/mysql.sock
-  when: dbservers_tables_check.query_result[0] | length == 0
+  when: db_servers_tables_check.query_result[0] | length == 0
+  delegate_to: localhost
 
 - name: Create an app DB user
   community.mysql.mysql_user:
@@ -62,8 +56,3 @@
     state: present
     login_unix_socket: /var/lib/mysql/mysql.sock
   no_log: true
-  
-- name: Clean up the imported schema file
-  ansible.builtin.file:
-    path: /tmp/schema.sql
-    state: absent
