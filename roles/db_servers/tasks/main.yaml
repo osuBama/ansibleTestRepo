@@ -1,4 +1,3 @@
 ---
 - import_tasks: deployDB.yaml
-#- import_tasks: mock_users.yaml
 - import_tasks: fetchUsers.yaml
