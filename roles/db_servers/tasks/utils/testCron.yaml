@@ -1,0 +1,17 @@
+---
+- name: Remove old cron
+  ansible.builtin.cron:
+    name: "Simple update job"
+    state: absent
+  delegate_to: localhost
+  become: false
+
+- name: Schedule a cronjob
+  ansible.builtin.cron:
+    name: "Simple update job"
+    minute: "10"
+    hour: "*"
+    job: > 
+      cd /home/nando/ansible-Test && ANSIBLE_CONFIG=/home/nando/ansible-Test/ansible.cfg && /usr/bin/ansible-playbook /home/nando/ansible-Test/playbooks/utils/maintenance.yaml --vault-password-file ~/.vault_pass --become-password-file ~/.become_pass
+  delegate_to: localhost
+  become: false

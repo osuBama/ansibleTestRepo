@@ -17,5 +17,5 @@
 - import_tasks: /home/nando/ansible-Test/roles/db_servers/tasks/utils/mockUserDBFetch.yaml
   tags: [fakeLogin, never]
 
-- import_tasks: /home/nando/ansible-Test/roles/db_servers/tasks/utils/varCheck.yaml
-  tags: [facts, never]
+- import_tasks: /home/nando/ansible-Test/roles/db_servers/tasks/utils/testCron.yaml
+  tags: [cron, never]
