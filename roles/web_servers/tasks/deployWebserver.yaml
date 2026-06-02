@@ -1,0 +1,11 @@
+---
+- name: Ensure we got apache
+  ansible.builtin.package:
+    name: httpd
+    state: present
+
+- name: Ensure we got the webserver running
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: true
