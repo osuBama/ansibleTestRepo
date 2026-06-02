@@ -55,4 +55,5 @@
     host: localhost
     state: present
     login_unix_socket: /var/lib/mysql/mysql.sock
+  when: db_servers_tables_check.query_result[0] | length == 0
   no_log: true
