@@ -1,0 +1,6 @@
+---
+db_name: totallyChatGPT
+db_user: "{{ vault_db_user }}"
+db_token: "{{ vault_db_password }}"
+db_host: "{{ hostvars['RockyDB1']['ansible_host'] }}"
+web_host: "{{ hostvars['RockyWS1']['ansible_host'] }}"

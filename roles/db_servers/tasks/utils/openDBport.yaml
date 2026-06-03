@@ -1,0 +1,14 @@
+---
+
+- name: Check if firewall ports are open
+  community.general.listen_ports_facts:
+
+- name: Open port for website
+  ansible.builtin.firewalld:
+    port: 3306/tcp
+    permanent: true
+    state: enabled
+  when: 3306 not in ansible_facts.tcp_listen | map(attribute='port') | list
+
+- name: Reload firewall rules
+  ansible.builtin.command: "firewall-cmd --reload"

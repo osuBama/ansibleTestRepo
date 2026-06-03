@@ -9,3 +9,38 @@
     name: httpd
     state: started
     enabled: true
+
+- name: Ensure we got php
+  ansible.builtin.package:
+    name: php
+    state: present
+
+- name: Ensure we got php-pdo
+  ansible.builtin.package:
+    name: php-pdo
+    state: present
+
+- name: Check if website files are present
+  ansible.builtin.stat:
+    path: /var/www/html/index.php
+  register: web_servers_site_files
+
+- name: Copy over website files if missing
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /var/www/html/
+    mode: '0644'
+  with_fileglob:
+    - ~/ansible-Test/roles/web_servers/files/*.php
+  when: not web_servers_site_files.stat.exists
+
+- name: Copy over the config file with the secrets
+  ansible.builtin.template:
+    src: config.php.j2
+    dest: /var/www/html/config.php
+    mode: '0640'
+
+- name: Ensure firewall allows access to database
+  ansible.builtin.include_role:
+    name: db_servers
+    tasks_from: utils/openDBport.yaml
